@@ -4,5 +4,6 @@ module.exports = (db, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-    })
+    });
+    return Category;
 };

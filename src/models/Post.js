@@ -17,4 +17,5 @@ module.exports = (db, DataTypes) => {
             primaryKey: true
         }
     });
+    return Post;
 };
