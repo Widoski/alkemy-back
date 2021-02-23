@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
 const PostModel = require("./models/post");
+const CategoryModel = require("./models/category");
 
 const db = new Sequelize("db_connect", "user", "4264809", {
     host: "localhost",
@@ -11,11 +12,13 @@ const db = new Sequelize("db_connect", "user", "4264809", {
 });
 
 const Post = PostModel(db, DataTypes);
+const Category = CategoryModel(db, DataTypes);
 
 db.sync()
     .then(res => console.log("¡Synchronized!"))
-    .catch(err => console.log("Cannot synchronized"))
+    .catch(err => console.log(err))
 
 module.exports = {
-    Post
+    Post,
+    Category
 }

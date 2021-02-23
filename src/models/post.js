@@ -1,23 +1,19 @@
-module.exports = (db, Datatypes) => {
+module.exports = (db, DataTypes) => {
     const Post = db.define("Post", {
         titulo: {
-            type: Datatypes.STRING,
+            type: DataTypes.STRING,
             allowNull: false
         },
         contenido: {
-            type: Datatypes.STRING,
-            allowNull: false
-        },
-        categoria: {
-            type: Datatypes.STRING,
+            type: DataTypes.STRING,
             allowNull: false
         },
         imagen: {
-            type: Datatypes.STRING,
+            type: DataTypes.STRING,
             allowNull: false
         },
         id: {
-            type: Datatypes.UUID,
+            type: DataTypes.UUID,
             primaryKey: true
         }
     });
