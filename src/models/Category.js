@@ -4,6 +4,11 @@ module.exports = (db, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
     });
     return Category;
 };
