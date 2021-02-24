@@ -7,7 +7,8 @@ const db = new Sequelize("db_connect", "user", "4264809", {
     host: "localhost",
     dialect: "mysql",
     define: {
-        freezeTableName: true
+        freezeTableName: true,
+        timestamps: false
     }
 });
 
