@@ -12,10 +12,15 @@ module.exports = (db, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        fecha: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
         id: {
-            type: DataTypes.UUID,
-            primaryKey: true
-        }
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
     });
     return Post;
 };
