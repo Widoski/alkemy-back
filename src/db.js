@@ -15,6 +15,9 @@ const db = new Sequelize("db_connect", "user", "4264809", {
 const Post = PostModel(db, DataTypes);
 const Category = CategoryModel(db, DataTypes);
 
+Post.belongsTo(Category);
+Category.hasMany(Post);
+
 db.sync()
     .then(res => console.log("¡Synchronized!"))
     .catch(err => console.log("Cannot synchronized", err))
