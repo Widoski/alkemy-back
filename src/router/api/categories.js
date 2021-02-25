@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const { Category } = require("../../db");
+const { Post } = require("../../db");
 
 router.get("/", (req, res) => {
     Category.findAll({
@@ -27,6 +28,34 @@ router.get("/:id", (req, res) => {
                 res.json({ msg: `Category ${req.params.id} doesn't exist` })
             } else {
                 res.json(category);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
+router.get("/:id/posts", (req, res) => {
+    Category.findOne({
+        where: {
+            id: req.params.id
+        }
+    })
+        .then(categoria => {
+            if (!categoria) {
+                res.json({ msg: `Category ${req.params.id} doesn't exist` });
+            } else {
+                Post.findAll({
+                    where: {
+                        CategoryId: categoria.id
+                    }
+                })
+                    .then(posts => {
+                        res.json(posts);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             }
         })
         .catch(err => {
