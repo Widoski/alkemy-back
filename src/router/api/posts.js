@@ -86,8 +86,6 @@ router.patch("/:id", (req, res) => {
             .catch(err => {
                 console.log(err);
             });
-    } else {
-        res.json({ msg: "Bad request." })
     }
 });
 
