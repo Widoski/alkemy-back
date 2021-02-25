@@ -1,4 +1,5 @@
 const express = require("express");
+const { restart } = require("nodemon");
 
 const router = express.Router();
 
@@ -6,7 +7,7 @@ const { Post } = require("../../db");
 
 router.get("/", (req, res) => {
     Post.findAll({
-        order: [['fecha', 'DESC']],
+        order: [["fecha", "DESC"]],
     })
         .then(posts => {
             res.json(posts);
@@ -35,8 +36,9 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-    if (!req.body.titulo || !req.body.contenido || !req.body.imagen) {
-        res.json({ msg: "Cannot post. Data incompleted." })
+    console.log(req.body)
+    if (!req.body.titulo || !req.body.contenido || !req.body.imagen || !req.body.CategoryId) {
+        res.json({ msg: "Cannot post." })
     } else {
         const newBody = {
             ...req.body,
@@ -48,13 +50,13 @@ router.post("/", (req, res) => {
                 res.json(post);
             })
             .catch(err => {
-                console.log(err);
+                res.json({ msg: `Error. Cannot post.` });
             });
     }
 });
 
 router.patch("/:id", (req, res) => {
-    if (req.body.titulo || req.body.contenido || req.body.imagen && req.params.id) {
+    if (req.body.titulo || req.body.contenido || req.body.imagen || req.body.CategoryId && req.params.id) {
         Post.findOne({
             where: {
                 id: req.params.id
@@ -69,7 +71,9 @@ router.patch("/:id", (req, res) => {
                         titulo: data.titulo ? data.titulo : post.titulo,
                         contenido: data.contenido ? data.contenido : post.contenido,
                         imagen: data.imagen ? data.imagen : post.imagen,
+                        CategoryId: data.CategoryId ? data.CategoryId : post.CategoryId
                     };
+
                     Post.update(newBody, {
                         where: {
                             id: req.params.id
