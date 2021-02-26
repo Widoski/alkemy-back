@@ -1,5 +1,4 @@
 const express = require("express");
-const { restart } = require("nodemon");
 
 const router = express.Router();
 
@@ -36,22 +35,38 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-    console.log(req.body)
     if (!req.body.titulo || !req.body.contenido || !req.body.imagen || !req.body.CategoryId) {
         res.json({ msg: "Cannot post." })
     } else {
-        const newBody = {
-            ...req.body,
-            fecha: new Date()
-        };
+        const numberOfCharacters = req.body.imagen.length - 3;
+        const string = [];
+        let count = 1
 
-        Post.create(newBody)
-            .then(post => {
-                res.json(post);
-            })
-            .catch(err => {
-                res.json({ msg: `Error. Cannot post.` });
-            });
+        req.body.imagen.split("").forEach(letter => {
+            if (count >= numberOfCharacters) {
+                string.push(letter);
+            } else {
+                count++
+            }
+            return string
+        })
+
+        if (string.join("") === ".jpg" || string.join("") === ".png") {
+            const newBody = {
+                ...req.body,
+                fecha: new Date()
+            };
+
+            Post.create(newBody)
+                .then(post => {
+                    res.json(post);
+                })
+                .catch(err => {
+                    res.json({ msg: `Error. Cannot post.` });
+                });
+        } else {
+            res.json("Error. Por favor, suba imagenes .jpg o .png")
+        }
     }
 });
 
